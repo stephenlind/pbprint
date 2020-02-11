@@ -17,20 +17,21 @@ if [ ${ORIG_HEIGHT} -gt ${ORIG_WIDTH} ]; then
 	ORIENTATION="portrait"
 	WIDTH=${SHORT_EDGE}
 	HEIGHT=${LONG_EDGE}
+	EDGE_RATIO=`bc -l <<< "${ORIG_HEIGHT} / ${ORIG_WIDTH}"`
 else
 	ORIENTATION="landscape"
 	HEIGHT=${SHORT_EDGE}
 	WIDTH=${LONG_EDGE}
+	EDGE_RATIO=`bc -l <<< "${ORIG_WIDTH} / ${ORIG_HEIGHT}"`
 fi
 
 # determine proper resample
-MIN_HEIGHT_RATIO=`bc -l <<< "${SHORT_EDGE} / ${LONG_EDGE}"`
-MAX_HEIGHT_RATIO=`bc -l <<< "${LONG_EDGE} / ${SHORT_EDGE}"`
-HW_RATIO=`bc -l <<< "${ORIG_HEIGHT} / ${ORIG_WIDTH}"`
-SQUARISH=`bc -l <<< "${HW_RATIO} < ${MAX_HEIGHT_RATIO} && ${HW_RATIO} > ${MIN_HEIGHT_RATIO}"`
+MAX_EDGE_RATIO=`bc -l <<< "${LONG_EDGE} / ${SHORT_EDGE}"`
+SQUARISH=`bc -l <<< "${EDGE_RATIO} < ${MAX_EDGE_RATIO}"`
 if [ ${SQUARISH} -ne 0 ]; then
-	# not understanding what this value should be yet
-	RESAMPLE_MAX=$(expr ${LONG_EDGE} - 80)
+	# should be 
+	ADJUSTED_EDGE=`bc -l <<< "${EDGE_RATIO} * ${SHORT_EDGE} - 80"`
+	RESAMPLE_MAX=${ADJUSTED_EDGE%.*}
 else
 	RESAMPLE_MAX=$(expr ${LONG_EDGE} - 80)	
 fi	
