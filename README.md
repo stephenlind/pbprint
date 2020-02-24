@@ -22,6 +22,6 @@ Without any arguments, this will resize the image to the clipboard to maximize i
 
 ## Motivation
 
-This script was written to automate the printing of coloring pages for kids. If you perform a [google image search](https://www.google.com/search?tbm=isch&q=coloring+pages+butterfly) for "coloring pages <something your kid likes>", you will get lots of great pictures, which can be copied to the clipboard. `pbprint.sh` makes the re-sizing and printing part much faster.
+This script was written to automate the printing of coloring pages for kids. If you perform a [google image search](https://www.google.com/search?tbm=isch&q=coloring+pages+butterfly) for "coloring pages something_kid_likes", you will get lots of great pictures, which can be copied to the clipboard. `pbprint.sh` makes the re-sizing and printing part much faster.
 
 
