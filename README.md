@@ -1,5 +1,5 @@
 # pbprint
-`pbprint` automatically resizes images to be as large as possible on an A4 page, and then automatically prints them
+`pbprint` uses the image in your clipboard (pasteboard), resizes it to be as large as possible on an A4 page, and then prints it using your default printer.
 
 ## Requirements
 
