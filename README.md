@@ -3,11 +3,17 @@
 
 ## Requirements
 
-Requires `pngpaste`, a tool for creating a png file out of the current copied item in your clipboard. 
+Requires `pngpaste` and `identify` (imagemagick)
 
-You can install `pngpaste` using [Homebrew](https://brew.sh/).
+`pngpaste` is a tool for creating a png file out of the current copied item in your clipboard. 
+
+`imagemagick` is a tool for manipulating images from the command line. 
+
+The easist wayto install these is using [Homebrew](https://brew.sh/).
 
 `brew install pngpaste`
+
+`brew install imagemagick`
 
 Make sure `pngpaste` is in your `PATH`
 
