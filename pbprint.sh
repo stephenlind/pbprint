@@ -6,9 +6,11 @@
 # 3. lp (preinstalled on macOS, configured to use your default printer)
 
 # Constants: A4 page at 300 dpi
-LONG_EDGE=3508
-SHORT_EDGE=2480
-MARGIN=150 # 0.5 inches (0.25 on each side, safe for most printers)
+# LONG_EDGE=3508
+# SHORT_EDGE=2480
+# MARGIN=300 # 0.5 inches (0.5 inches on each side, safe for all printers)
+PRINTABLE_LONG_EDGE=3208 
+PRINTABLE_SHORT_EDGE=2180
 
 # copy the pasteboard to a png using pngpaste
 TEMP_PNG="pbprint.pbpaste.png"
@@ -19,27 +21,27 @@ ORIG_WIDTH=`identify -format '%w' ${TEMP_PNG}`
 # determine portrait/landscape
 if [[ ${ORIG_HEIGHT} -ge ${ORIG_WIDTH} ]]; then
 	ORIENTATION="portrait"
-	WIDTH=${SHORT_EDGE}
-	HEIGHT=${LONG_EDGE}
+	WIDTH=${PRINTABLE_SHORT_EDGE}
+	HEIGHT=${PRINTABLE_LONG_EDGE}
 	EDGE_RATIO=`bc -l <<< "${ORIG_HEIGHT} / ${ORIG_WIDTH}"`
 else
 	ORIENTATION="landscape"
-	HEIGHT=${SHORT_EDGE}
-	WIDTH=${LONG_EDGE}
+	HEIGHT=${PRINTABLE_SHORT_EDGE}
+	WIDTH=${PRINTABLE_LONG_EDGE}
 	EDGE_RATIO=`bc -l <<< "${ORIG_WIDTH} / ${ORIG_HEIGHT}"`
 fi
 
 # determine proper maximum resample size for this image
-MAX_EDGE_RATIO=`bc -l <<< "${LONG_EDGE} / ${SHORT_EDGE}"`
+MAX_EDGE_RATIO=`bc -l <<< "${PRINTABLE_LONG_EDGE} / ${PRINTABLE_SHORT_EDGE}"`
 SQUARISH=`bc -l <<< "${EDGE_RATIO} < ${MAX_EDGE_RATIO}"`
 if [[ ${SQUARISH} ]]; then
 	# image is close enough to square that we need to use the short edge as limit
 	# to maximize, multiply the short edge by the edge ratio
-	ADJUSTED_EDGE=`bc -l <<< "${EDGE_RATIO} * ${SHORT_EDGE} - ${MARGIN}"`
+	ADJUSTED_EDGE=`bc -l <<< "${EDGE_RATIO} * ${PRINTABLE_SHORT_EDGE}"`
 	RESAMPLE_MAX=${ADJUSTED_EDGE%.*}
 else
 	# more asymetric than A4, can be resampled to the long edge
-	RESAMPLE_MAX=$(expr ${LONG_EDGE} - ${MARGIN})	
+	RESAMPLE_MAX=${PRINTABLE_SHORT_EDGE}	
 fi	
 
 # use sips to resize keeping aspect ratio 
@@ -58,7 +60,7 @@ if [[ "${1}" == "--pdf" ]]; then
 	open ${PDF_OUT}
 else
 	echo "Printing in orientation ${ORIENTATION}"
-	lp -o ${ORIENTATION} -o fit-to-page "${TEMP_PDF}"	
+	lp -o ${ORIENTATION} "${TEMP_PDF}"	
 	rm "${TEMP_PDF}"
 fi
 
