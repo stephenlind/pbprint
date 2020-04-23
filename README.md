@@ -1,13 +1,14 @@
 # pbprint
+
 `pbprint` uses the image in your clipboard (pasteboard), resizes it to be as large as possible on an A4 page, and then prints it using your default printer.
 
 ## Requirements
 
 Requires `pngpaste` and `identify` (imagemagick)
 
-`pngpaste` is a tool for creating a png file out of the current copied item in your clipboard. 
+`pngpaste` is a tool for creating a png file out of the current copied item in your clipboard.
 
-`imagemagick` is a tool for manipulating images from the command line. 
+`imagemagick` is a tool for manipulating images from the command line.
 
 The easist wayto install these is using [Homebrew](https://brew.sh/).
 
@@ -29,5 +30,3 @@ Without any arguments, this will resize the image to the clipboard to maximize i
 ## Motivation
 
 This script was written to automate the printing of coloring pages for kids. If you perform a [google image search](https://www.google.com/search?tbm=isch&q=coloring+pages+butterfly) for "coloring pages something_kid_likes", you will get lots of great pictures, which can be copied to the clipboard. `pbprint.sh` makes the re-sizing and printing part much faster.
-
-

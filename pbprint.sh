@@ -34,14 +34,14 @@ fi
 # determine proper maximum resample size for this image
 MAX_EDGE_RATIO=`bc -l <<< "${PRINTABLE_LONG_EDGE} / ${PRINTABLE_SHORT_EDGE}"`
 SQUARISH=`bc -l <<< "${EDGE_RATIO} < ${MAX_EDGE_RATIO}"`
-if [[ ${SQUARISH} ]]; then
+if [[ ${SQUARISH} -ne 0 ]]; then
 	# image is close enough to square that we need to use the short edge as limit
 	# to maximize, multiply the short edge by the edge ratio
 	ADJUSTED_EDGE=`bc -l <<< "${EDGE_RATIO} * ${PRINTABLE_SHORT_EDGE}"`
 	RESAMPLE_MAX=${ADJUSTED_EDGE%.*}
 else
-	# more asymetric than A4, can be resampled to the long edge
-	RESAMPLE_MAX=${PRINTABLE_SHORT_EDGE}	
+	# more asymmetric than A4, can be resampled to the long edge
+	RESAMPLE_MAX=${PRINTABLE_LONG_EDGE}	
 fi	
 
 # use sips to resize keeping aspect ratio 
